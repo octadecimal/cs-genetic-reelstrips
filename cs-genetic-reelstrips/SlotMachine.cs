@@ -44,14 +44,14 @@ namespace cs_genetic_reelstrips
         {
             numSpins = 0;
 
-            for(int i = 0; i < 10000; i++)
+            for(int i = 0; i < Settings.precision; i++)
             {
                 Spin();
             }
 
             //if(rtp >= -200.0 && rtp < 300.0)
             //if((numWins/numSpins) > 0.10 && (numWins/numSpins) < 0.95)
-            if(numWins > 0 && numWins < 10000 && rtp > -10 && rtp < 20)
+            if(numWins > 0 && numWins < Settings.precision && rtp > -10 && rtp < 20)
             {
                 Console.WriteLine("["+id+"]\t"+(rtp*100)+ "%\t" + numWins+"/"+numSpins+"\t$" + balance);
             }

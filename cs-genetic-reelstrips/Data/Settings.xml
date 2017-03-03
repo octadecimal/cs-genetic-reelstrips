@@ -1,7 +1,10 @@
 ﻿<Settings>
   
   <!-- SlotMachine population count -->
-  <population>10000</population>
+  <population>1024</population>
+
+  <!-- Number of simulation runs per slot machine -->
+  <precision>1000</precision>
 
   <!-- Number of symbol columns (reels) -->
   <numCols>5</numCols>

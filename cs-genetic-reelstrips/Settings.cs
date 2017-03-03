@@ -13,6 +13,7 @@ namespace cs_genetic_reelstrips
         public static Random rng;
 
         public static int population;
+        public static int precision;
         public static int numCols;
         public static int numRows;
         public static int minPayingSymbols;
@@ -44,6 +45,7 @@ namespace cs_genetic_reelstrips
         private static void Parse()
         {
             population = GetInt("population");
+            precision = GetInt("precision");
             numCols = GetInt("numCols");
             numRows = GetInt("numRows");
             minPayingSymbols = GetInt("minPayingSymbols");
