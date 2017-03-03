@@ -1,0 +1,76 @@
+﻿<Settings>
+  
+  <!-- SlotMachine population count -->
+  <population>10000</population>
+
+  <!-- Number of symbol columns (reels) -->
+  <numCols>5</numCols>
+
+  <!-- Number of symbol rows -->
+  <numRows>3</numRows>
+
+  <!-- Minimum number of symbols needed in a line for a win -->
+  <minPayingSymbols>3</minPayingSymbols>
+
+  <!-- Minimum reel strip length -->
+  <minReelStripLength>10</minReelStripLength>
+
+  <!-- Maximum reel strip length -->
+  <maxReelStripLength>100</maxReelStripLength>
+
+  <!-- Minimum bias frequency for wild symbol occurances -->
+  <minWildBias>0.1</minWildBias>
+
+  <!-- Maximum bias frequency for wild symbol occurances -->
+  <maxWildBias>0.75</maxWildBias>
+
+  <!-- Minimum bias frequency for scatter symbol occurances -->
+  <minScatterBias>0.1</minScatterBias>
+
+  <!-- Maximum bias frequency for scatter symbol occurances -->
+  <maxScatterBias>0.5</maxScatterBias>
+
+  <!-- Symbol definitions-->
+  <symbols>
+    <symbol>1</symbol>
+    <symbol>2</symbol>
+    <symbol>3</symbol>
+    <symbol>4</symbol>
+    <symbol>J</symbol>
+    <symbol>Q</symbol>
+    <symbol>K</symbol>
+    <symbol>A</symbol>
+    <symbol isWild="true">W</symbol>
+    <symbol isScatter="true">S</symbol>
+  </symbols>
+
+  <!-- Payline definitions-->
+  <lines>
+    <line>1,1,1,1,1</line>
+    <line>0,0,0,0,0</line>
+    <line>2,2,2,2,2</line>
+    <line>0,1,2,1,0</line>
+    <line>2,1,0,1,2</line>
+    <line>0,0,1,2,2</line>
+    <line>2,2,1,0,0</line>
+    <line>1,0,1,2,1</line>
+    <line>1,2,1,0,1</line>
+    <line>0,1,1,1,2</line>
+    <line>2,1,1,1,0</line>
+    <line>1,0,0,1,2</line>
+    <line>1,2,2,1,0</line>
+    <line>1,1,0,1,2</line>
+    <line>1,1,2,1,0</line>
+    <line>0,0,1,2,1</line>
+    <line>2,2,1,0,1</line>
+    <line>1,0,1,2,2</line>
+    <line>1,2,1,0,0</line>
+    <line>0,0,0,1,2</line>
+    <line>2,2,2,1,0</line>
+    <line>0,1,2,2,2</line>
+    <line>2,1,0,0,0</line>
+    <line>0,1,0,1,0</line>
+    <line>2,1,2,1,2</line>
+  </lines>
+
+</Settings>
