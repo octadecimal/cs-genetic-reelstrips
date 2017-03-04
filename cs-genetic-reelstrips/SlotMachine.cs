@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace cs_genetic_reelstrips
@@ -16,13 +17,14 @@ namespace cs_genetic_reelstrips
 
         public event CompleteDelegate CompleteEvent;
 
-        private ReelSet reelSet;
-
         public int balance = 1000;
-        public float rtp = 1.0f;
+        public double rtp = 1.0;
+        public double winRate = 0.0;
 
         public int numSpins;
         public int numWins;
+
+        public double fitness = 0;
 
 
         /// <summary>
@@ -33,51 +35,117 @@ namespace cs_genetic_reelstrips
             this.id = id;
 
             // Create DNA
-            dna = new SlotMachineDNA();
-            //dna.PrintValues();
-
-            // Create reel set
-            reelSet = new ReelSet(dna);
+            this.dna = new SlotMachineDNA();
+            
+            //this.dna.PrintValues();
         }
 
-        public void StartSimulating()
+
+        /// <summary>
+        /// Inserts new DNA, effectively creating a new machine.
+        /// Here all values should be reset.
+        /// </summary>
+        /// <param name="dna"></param>
+        public void InsertDNA(SlotMachineDNA dna)
         {
             numSpins = 0;
+            numWins = 0;
+            balance = 1000;
+            winRate = 0.0;
+            rtp = 1;
 
-            for(int i = 0; i < Settings.precision; i++)
+            this.dna = dna;
+        }
+
+
+        /// <summary>
+        /// Starts the simulation runs.
+        /// </summary>
+        public void StartSimulating()
+        {
+            // Reset
+            numSpins = 0;
+            numWins = 0;
+            balance = 1000;
+            winRate = 0.0;
+            rtp = 1;
+
+            // Simulate spins
+            for (int i = 0; i < Settings.precision; i++)
             {
                 Spin();
             }
 
-            //if(rtp >= -200.0 && rtp < 300.0)
-            //if((numWins/numSpins) > 0.10 && (numWins/numSpins) < 0.95)
-            if(numWins > 0 && numWins < Settings.precision && rtp > -10 && rtp < 20)
+            // Calculate fitness
+            double distanceFromTargetRTP = Math.Pow((1 / Math.Abs(Settings.targetRTP - rtp)) * 100, 2);
+            double distanceFromWinRate = Math.Pow((1 / Math.Abs(Settings.targetWinRate - winRate)) * 1, 1);
+            //fitness = distanceFromTargetRTP;
+            fitness = distanceFromWinRate;
+
+            if(rtp > 1000 && rtp < -1000)
             {
-                Console.WriteLine("["+id+"]\t"+(rtp*100)+ "%\t" + numWins+"/"+numSpins+"\t$" + balance);
+                //fitness *= .1;
             }
 
+            //if(rtp >= -200.0 && rtp < 300.0)
+            //if((numWins/numSpins) > 0.10 && (numWins/numSpins) < 0.95)
+            if (numWins > 10000 && numWins < Settings.precision && rtp > -10 && rtp < 10)
+            //if(numWins > 0 && numWins < Settings.precision)
+            {
+                //Console.WriteLine();
+                //Console.WriteLine("rtp: "+distanceFromTargetRTP);
+                //Console.WriteLine("win: " + distanceFromWinRate);
+                //Console.WriteLine("FITNESS: " + fitness);
+                Console.Write("\n["+id+"]\t"+(rtp*100).ToString("N4")+ "%\t" + numWins+"/"+numSpins+"\t"+fitness.ToString("N6"));
+            }
+            else
+            {
+                Console.Write(".");
+            }
+
+            // Dispatch complete
             CompleteEvent(this);
         }
 
+        /// <summary>
+        /// Performs an individual spin.
+        /// </summary>
         public void Spin()
         {
+            // Pre-process
             numSpins++;
 
+            // Apply bet
             balance -= Settings.lines.Length;
 
-            //Console.WriteLine("$"+balance);
-            reelSet.Spin();
-            //reelSet.PrintSymbols();
+            // Spin
+            dna.reelSet.Spin();
 
+            // Evaluate wins
             int win = EvaluateWins();
+
+            // Apply win
             balance += win;
 
+            // Count wins
             if(win > 0)
             {
                 numWins++;
             }
 
+            // Calculate rates
+            winRate = (float)numWins / (float)numSpins;
             rtp = balance / 1000f;
+        }
+
+        public void NormalizeFitness(double max)
+        {
+            fitness /= max;
+            
+            if(fitness >= 1)
+            { 
+                //Console.WriteLine(rtp +" -> "+fitness +" " + (fitness>1));
+            }
         }
 
         public int EvaluateWins()
@@ -129,7 +197,7 @@ namespace cs_genetic_reelstrips
 
             for (int i = 0; i < line.Length; i++)
             {
-                currentSymbol = reelSet.visibleSymbols[i][line[i]];
+                currentSymbol = dna.reelSet.visibleSymbols[i][line[i]];
 
                 if (scenario[i] != currentSymbol.id && !currentSymbol.isWild)
                 {

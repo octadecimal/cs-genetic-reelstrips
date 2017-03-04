@@ -14,8 +14,11 @@ namespace cs_genetic_reelstrips
 
         public static int population;
         public static int precision;
+        public static float targetRTP;
+        public static float targetWinRate;
         public static int numCols;
         public static int numRows;
+        public static int maxPay;
         public static int minPayingSymbols;
         public static int minReelStripLength;
         public static int maxReelStripLength;
@@ -46,8 +49,11 @@ namespace cs_genetic_reelstrips
         {
             population = GetInt("population");
             precision = GetInt("precision");
+            targetRTP = GetFloat("targetRTP");
+            targetWinRate = GetFloat("targetWinRate");
             numCols = GetInt("numCols");
             numRows = GetInt("numRows");
+            maxPay = GetInt("maxPay");
             minPayingSymbols = GetInt("minPayingSymbols");
             minReelStripLength = GetInt("minReelStripLength");
             maxReelStripLength = GetInt("maxReelStripLength");

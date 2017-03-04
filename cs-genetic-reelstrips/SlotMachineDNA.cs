@@ -14,17 +14,74 @@ namespace cs_genetic_reelstrips
         public float wildBias;
         public float scatterBias;
 
-        public SlotMachineDNA()
+        private Random rng;
+
+        public ReelSet reelSet;
+
+
+        public SlotMachineDNA(int generation = 0)
         {
-            // Generate random biases
-            wildBias = (float)(Settings.rng.NextDouble() * (Settings.maxWildBias - Settings.minWildBias)) + Settings.minWildBias;
-            scatterBias = (float)(Settings.rng.NextDouble() * (Settings.maxScatterBias - Settings.minScatterBias)) + Settings.minScatterBias;
+            rng = new Random(Settings.rng.Next());
+
+            // Randomly generate if first generation
+            if(generation == 0)
+            {
+                // Generate random biases
+                wildBias = (float)(rng.NextDouble() * (Settings.maxWildBias - Settings.minWildBias)) + Settings.minWildBias;
+                scatterBias = (float)(rng.NextDouble() * (Settings.maxScatterBias - Settings.minScatterBias)) + Settings.minScatterBias;
+
+                // Generate reel set
+                reelSet = new ReelSet(this);
+            }
 
             // Generate paytable
             GeneratePaytable();
 
             // Generate win scenarios from paytable
             GenerateWinScenarios();
+        }
+
+        public SlotMachineDNA Cross(SlotMachineDNA partner)
+        {
+            SlotMachineDNA child = new SlotMachineDNA(1);
+
+            child.wildBias = MixFloat(wildBias, partner.wildBias);
+            child.scatterBias = MixFloat(scatterBias, partner.scatterBias);
+
+            // TEMP USE THIS REELSET ON CHILD
+            child.reelSet = this.reelSet;
+            child.winScenarios = this.winScenarios;
+
+            for (int i = 0; i < paytable.Length; i++)
+            {
+                int[] row = paytable[i];
+                
+                for(int j = 0; j < row.Length; j++)
+                {
+                    child.paytable[i][j] = Math.Abs(MixInt(paytable[i][j], partner.paytable[i][j], 0.15));
+
+                    if (rng.NextDouble() <= 0.02)
+                    {
+                        if(child.paytable[i][j] != 0)
+                        { 
+                            child.paytable[i][j] += rng.Next(-10, 10);
+                            child.paytable[i][j] = Math.Max(0, child.paytable[i][j]);
+                        }
+                    }
+                }
+            }
+
+            return child;
+        }
+
+        private float MixFloat(float a, float b, float weight = 0.5f)
+        {
+            return a + (b - a) * weight;
+        }
+
+        private int MixInt(int a, int b, double weight = 0.5)
+        {
+            return Convert.ToInt32(a + (b - a) * weight);
         }
 
         private void GenerateWinScenarios()
@@ -97,20 +154,20 @@ namespace cs_genetic_reelstrips
                     }
                     else
                     {
-                        symbolPays[j] = Settings.rng.Next(1, 50);
-                        symbolPays[j] *= 5;
+                        symbolPays[j] = rng.Next(1, Settings.maxPay);
+                        //symbolPays[j] *= 5;
 
                         if (symbolPays[j] < 10)
                         {
                             //symbolPays[j] *= 5;
                         }
-                        else if(symbolPays[j] < 50)
+                        else if(symbolPays[j] < 25)
                         {
-                            //symbolPays[j] *= 25;
+                            //symbolPays[j] *= 10;
                         }
                         else
                         {
-                            //symbolPays[j] *= 100;
+                            //symbolPays[j] *= 25;
                         }
                     }
                 }
@@ -131,6 +188,27 @@ namespace cs_genetic_reelstrips
         {
             Console.WriteLine("wildBias=" + wildBias);
             Console.WriteLine("scatterBias=" + scatterBias);
+        }
+
+        public void PrintPaytable()
+        {
+            Console.WriteLine();
+            for (int y = 0; y < paytable.Length; y++)
+            {
+                int[] row = paytable[y];
+
+                for (int x = 0; x < row.Length; x++)
+                {
+                    Console.Write(paytable[y][x] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public void PrintReelStrips()
+        {
+            reelSet.PrintReelStrips();
         }
     }
 }

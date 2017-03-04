@@ -1,31 +1,40 @@
 ﻿<Settings>
   
   <!-- SlotMachine population count -->
-  <population>1024</population>
+  <population>1000</population>
 
   <!-- Number of simulation runs per slot machine -->
-  <precision>1000</precision>
+  <precision>100000</precision>
+
+  <!-- Target RTP -->
+  <targetRTP>0.95</targetRTP>
+
+  <!-- Target win rate -->
+  <targetWinRate>0.35</targetWinRate>
 
   <!-- Number of symbol columns (reels) -->
-  <numCols>5</numCols>
+  <numCols>3</numCols>
 
   <!-- Number of symbol rows -->
-  <numRows>3</numRows>
+  <numRows>1</numRows>
+
+  <!-- Maximum amount a line win can pay -->
+  <maxPay>20</maxPay>
 
   <!-- Minimum number of symbols needed in a line for a win -->
   <minPayingSymbols>3</minPayingSymbols>
 
   <!-- Minimum reel strip length -->
-  <minReelStripLength>10</minReelStripLength>
+  <minReelStripLength>5</minReelStripLength>
 
   <!-- Maximum reel strip length -->
   <maxReelStripLength>100</maxReelStripLength>
 
   <!-- Minimum bias frequency for wild symbol occurances -->
-  <minWildBias>0.1</minWildBias>
+  <minWildBias>0.05</minWildBias>
 
   <!-- Maximum bias frequency for wild symbol occurances -->
-  <maxWildBias>0.75</maxWildBias>
+  <maxWildBias>0.95</maxWildBias>
 
   <!-- Minimum bias frequency for scatter symbol occurances -->
   <minScatterBias>0.1</minScatterBias>
@@ -44,36 +53,11 @@
     <symbol>K</symbol>
     <symbol>A</symbol>
     <symbol isWild="true">W</symbol>
-    <symbol isScatter="true">S</symbol>
   </symbols>
 
   <!-- Payline definitions-->
   <lines>
-    <line>1,1,1,1,1</line>
-    <line>0,0,0,0,0</line>
-    <line>2,2,2,2,2</line>
-    <line>0,1,2,1,0</line>
-    <line>2,1,0,1,2</line>
-    <line>0,0,1,2,2</line>
-    <line>2,2,1,0,0</line>
-    <line>1,0,1,2,1</line>
-    <line>1,2,1,0,1</line>
-    <line>0,1,1,1,2</line>
-    <line>2,1,1,1,0</line>
-    <line>1,0,0,1,2</line>
-    <line>1,2,2,1,0</line>
-    <line>1,1,0,1,2</line>
-    <line>1,1,2,1,0</line>
-    <line>0,0,1,2,1</line>
-    <line>2,2,1,0,1</line>
-    <line>1,0,1,2,2</line>
-    <line>1,2,1,0,0</line>
-    <line>0,0,0,1,2</line>
-    <line>2,2,2,1,0</line>
-    <line>0,1,2,2,2</line>
-    <line>2,1,0,0,0</line>
-    <line>0,1,0,1,0</line>
-    <line>2,1,2,1,2</line>
+    <line>0,0,0</line>
   </lines>
 
 </Settings>

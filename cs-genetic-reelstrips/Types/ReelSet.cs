@@ -11,6 +11,7 @@ namespace cs_genetic_reelstrips.Types
         private SlotMachineDNA dna;
         private Symbol[][] reelStrips;
         public Symbol[][] visibleSymbols;
+        private Random rng;
 
         /// <summary>
         /// ReelSet constructor.
@@ -19,6 +20,7 @@ namespace cs_genetic_reelstrips.Types
         public ReelSet(SlotMachineDNA dna)
         {
             this.dna = dna;
+            this.rng = new Random(Settings.rng.Next());
 
             // Initialize storage
             reelStrips = new Symbol[Settings.numCols][];
@@ -38,9 +40,12 @@ namespace cs_genetic_reelstrips.Types
         {
             for(int i = 0; i < reelStrips.Length; i++)
             {
-                int position = Settings.rng.Next(0, reelStrips[i].Length);
+                int position = rng.Next(0, reelStrips[i].Length);
+                //if(position == 0) Console.WriteLine("p: " + position);
                 visibleSymbols[i] = getSymbolsAt(i, position);
             }
+
+            //PrintSymbols();
         }
 
         /// <summary>
@@ -85,7 +90,7 @@ namespace cs_genetic_reelstrips.Types
         private Symbol[] createReelStrip()
         {
             // Generate random length that is within bounds defined in settings
-            int length = Settings.rng.Next(Settings.minReelStripLength, Settings.maxReelStripLength);
+            int length = rng.Next(Settings.minReelStripLength, Settings.maxReelStripLength);
 
             // Create empty reelStrip array
             Symbol[] reelStrip = new Symbol[length];
@@ -101,14 +106,14 @@ namespace cs_genetic_reelstrips.Types
                 canAdd = false;
 
                 // Get a random symbol
-                Symbol symbol = Settings.symbols[Settings.rng.Next(0, Settings.symbols.Length)];
+                Symbol symbol = Settings.symbols[rng.Next(0, Settings.symbols.Length)];
 
                 // Check for specific symbol types against biases
-                if (symbol.isWild && Settings.rng.NextDouble() <= dna.wildBias)
+                if (symbol.isWild && rng.NextDouble() <= dna.wildBias)
                 {
                     canAdd = true;
                 }
-                else if(symbol.isScatter && Settings.rng.NextDouble() <= dna.scatterBias)
+                else if(symbol.isScatter && rng.NextDouble() <= dna.scatterBias)
                 {
                     canAdd = true;
                 }
@@ -126,6 +131,21 @@ namespace cs_genetic_reelstrips.Types
             }
 
             return reelStrip;
+        }
+
+        public void PrintReelStrips()
+        {
+            Console.WriteLine();
+
+            for (int x = 0; x < reelStrips.Length; x++)
+            {
+                for(int y = 0; y < reelStrips[x].Length; y++)
+                {
+                    Console.Write(reelStrips[x][y].name + " ");
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
