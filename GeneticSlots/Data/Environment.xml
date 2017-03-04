@@ -1,0 +1,50 @@
+﻿<Environment>
+  <!-- SlotMachine population count -->
+  <population>2</population>
+
+  <!-- Number of simulation runs per slot machine -->
+  <precision>100000</precision>
+
+  <!-- Target RTP -->
+  <targetRtp>0.95</targetRtp>
+
+  <!-- Target win rate -->
+  <targetWinRate>0.35</targetWinRate>
+
+  <!-- Number of symbol columns (reels) -->
+  <numCols>3</numCols>
+
+  <!-- Number of symbol rows -->
+  <numRows>1</numRows>
+
+  <!-- Maximum amount a line win can pay -->
+  <maxPay>20</maxPay>
+
+  <!-- Minimum number of symbols needed in a line for a win -->
+  <minPayingSymbols>3</minPayingSymbols>
+
+  <!-- Minimum reel strip length -->
+  <minReelStripLength>5</minReelStripLength>
+
+  <!-- Maximum reel strip length -->
+  <maxReelStripLength>100</maxReelStripLength>
+
+  <!-- Symbol definitions-->
+  <symbols>
+    <symbol>1</symbol>
+    <symbol>2</symbol>
+    <symbol>3</symbol>
+    <symbol>4</symbol>
+    <symbol>J</symbol>
+    <symbol>Q</symbol>
+    <symbol>K</symbol>
+    <symbol>A</symbol>
+    <symbol minBias="0.00" maxBias="0.25" isWild="true">W</symbol>
+  </symbols>
+
+  <!-- Payline definitions-->
+  <lines>
+    <line>0,0,0</line>
+  </lines>
+
+</Environment>
