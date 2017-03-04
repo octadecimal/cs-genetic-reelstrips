@@ -40,6 +40,8 @@ namespace GeneticSlots
         /// </summary>
         public Symbol[] symbols;
 
+        public int[][] lines;
+
 
         // Xml document root node.
         private XmlNode xml;
@@ -79,12 +81,15 @@ namespace GeneticSlots
         /// </summary>
         public void Parse()
         {
+            // Parse data values
             population = GetInt("population");
             precision = GetInt("precision");
             targetRtp = GetFloat("targetRtp");
             targetWinRate = GetFloat("targetWinRate");
 
+            // Parse data structures
             symbols = ParseSymbols();
+            lines = ParseLines();
         }
 
 
@@ -96,11 +101,11 @@ namespace GeneticSlots
         /// </summary>
         private Symbol[] ParseSymbols()
         {
-            // Create our output
-            Symbol[] output = new Symbol[xml["symbols"].ChildNodes.Count];
-
-            // Grab our symbols child nodes
+            // Grab our symbols node
             XmlNode symbolsNode = xml["symbols"];
+
+            // Create our output
+            Symbol[] output = new Symbol[symbolsNode.ChildNodes.Count];
 
             // Loop through each symbol node
             for (int i = 0; i < symbolsNode.ChildNodes.Count; i++)
@@ -119,7 +124,45 @@ namespace GeneticSlots
                 output[i] = new Symbol(i, name, isWild, isScatter, minBias, maxBias);
             }
 
-            // Return
+            // Return output
+            return output;
+        }
+
+        /// <summary>
+        /// Parses our line definitions.
+        /// </summary>
+        /// <returns></returns>
+        private int[][] ParseLines()
+        {
+            // Grab our lines node
+            XmlNode linesNode = xml["lines"];
+
+            // Create our output
+            int[][] output = new int[linesNode.ChildNodes.Count][];
+
+            // Loop through each line node
+            for(int i = 0; i < linesNode.ChildNodes.Count; i++)
+            {
+                // Grab our current line node
+                XmlNode currentNode = linesNode.ChildNodes[i];
+
+                // Split our line definition into individual position components
+                string[] split = currentNode.InnerText.Split(',');
+
+                // Create our typed line array
+                int[] line = new int[split.Length];
+
+                // Convert our chars into ints and insert into typed line array
+                for(int j = 0; j < split.Length; j++)
+                {
+                    line[j] = Convert.ToInt32(split[j]);
+                }
+
+                // Save line in output
+                output[i] = line;
+            }
+
+            // Return output
             return output;
         }
 
