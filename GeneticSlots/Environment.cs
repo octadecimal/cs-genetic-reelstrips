@@ -36,10 +36,48 @@ namespace GeneticSlots
         public double targetWinRate;
 
         /// <summary>
+        /// Number of reels.
+        /// </summary>
+        public int numCols;
+
+        /// <summary>
+        /// Number of rows per reel.
+        /// </summary>
+        public int numRows;
+
+        /// <summary>
+        /// Maximum amount a line can pay.
+        /// </summary>
+        public int maxPay;
+
+        /// <summary>
+        /// Minimum number of paying symbols per win line scenario.
+        /// </summary>
+        public int minPayingSymbols;
+
+        /// <summary>
+        /// Minimum reel strip length.
+        /// </summary>
+        public int minReelStripLength;
+
+        /// <summary>
+        /// Maximum reel strip length.
+        /// </summary>
+        public int maxReelStripLength;
+
+        /// <summary>
+        /// Min number of selected symbols per slot machine.
+        /// </summary>
+        public int minSymbols;
+
+        /// <summary>
         /// Symbol definitions.
         /// </summary>
         public Symbol[] symbols;
 
+        /// <summary>
+        /// Payline definitions.
+        /// </summary>
         public int[][] lines;
 
 
@@ -86,6 +124,13 @@ namespace GeneticSlots
             precision = GetInt("precision");
             targetRtp = GetFloat("targetRtp");
             targetWinRate = GetFloat("targetWinRate");
+            numCols = GetInt("numCols");
+            numRows = GetInt("numRows");
+            maxPay = GetInt("maxPay");
+            minPayingSymbols = GetInt("minPayingSymbols");
+            minReelStripLength = GetInt("minReelStripLength");
+            maxReelStripLength = GetInt("maxReelStripLength");
+            minSymbols = GetInt("minSymbols");
 
             // Parse data structures
             symbols = ParseSymbols();
