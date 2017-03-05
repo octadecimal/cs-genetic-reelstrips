@@ -1,6 +1,6 @@
 ﻿<Environment>
   <!-- SlotMachine population count -->
-  <population>10</population>
+  <population>1000</population>
 
   <!-- Number of simulation runs per slot machine -->
   <precision>100000</precision>
@@ -12,10 +12,10 @@
   <targetWinRate>0.35</targetWinRate>
 
   <!-- Number of symbol columns (reels) -->
-  <numCols>3</numCols>
+  <numCols>5</numCols>
 
   <!-- Number of symbol rows -->
-  <numRows>1</numRows>
+  <numRows>3</numRows>
 
   <!-- Maximum amount a line win can pay -->
   <maxPay>20</maxPay>
@@ -34,6 +34,7 @@
 
   <!-- Symbol definitions-->
   <symbols>
+    <symbol>0</symbol>
     <symbol>1</symbol>
     <symbol>2</symbol>
     <symbol>3</symbol>
@@ -42,7 +43,7 @@
     <symbol>Q</symbol>
     <symbol>K</symbol>
     <symbol>A</symbol>
-    <symbol minBias="0.00" maxBias="0.25" isWild="true">W</symbol>
+    <symbol isWild="true">W</symbol>
   </symbols>
 
   <!-- Payline definitions-->

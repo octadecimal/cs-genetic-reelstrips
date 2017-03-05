@@ -9,13 +9,20 @@ namespace GeneticSlots.Genes
 {
     class SymbolSetGene
     {
-        int[] genome;
+        /// <summary>
+        /// Encoded genome.
+        /// </summary>
+        public int[] genome;
+
 
         // Environment
         Environment environment;
 
         // RNG
         Random rand;
+
+        // Number of activated dna
+        int numActivatations;
 
 
         /// <summary>
@@ -59,6 +66,35 @@ namespace GeneticSlots.Genes
                     numActivations++;
                 }
             }
+
+            // Save number of activated genes
+            this.numActivatations = numSymbolsToActivate;
+        }
+
+        /// <summary>
+        /// Decodes the genome, returning an array of symbol ids.
+        /// </summary>
+        /// <returns></returns>
+        public Symbol[] DecodeGenome()
+        {
+            // Flag to keep track of current output index
+            int currentIndex = 0;
+
+            // Create output array
+            Symbol[] output = new Symbol[numActivatations];
+
+            // Search for activated genes
+            for(int i = 0; i < genome.Length; i++)
+            {
+                if(genome[i] != 0)
+                {
+                    output[currentIndex] = environment.symbols[i];
+                    currentIndex++;
+                }
+            }
+
+            // Return output
+            return output;
         }
 
         /// <summary>
@@ -80,10 +116,7 @@ namespace GeneticSlots.Genes
         public void PrintGenome()
         {
             Console.Write("\n");
-            for(int i = 0; i < genome.Length; i++)
-            {
-                Console.Write("[" + genome[i] + "]");
-            }
+            for(int i = 0; i < genome.Length; i++) Console.Write("[" + genome[i] + "]");
             Console.Write("\n");
         }
 
