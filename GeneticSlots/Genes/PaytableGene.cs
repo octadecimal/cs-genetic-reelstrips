@@ -18,7 +18,6 @@ namespace GeneticSlots.Genes
         public PaytableGene(Environment environment)
         {
             this.environment = environment;
-            Console.WriteLine(this.GetHashCode());
         }
 
 

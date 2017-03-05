@@ -19,7 +19,6 @@ namespace GeneticSlots.Genes
         public ReelStripGene(Environment environment)
         {
             this.environment = environment;
-            Console.WriteLine(this.GetHashCode());
         }
 
 

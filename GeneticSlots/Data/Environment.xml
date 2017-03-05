@@ -1,6 +1,6 @@
 ﻿<Environment>
   <!-- SlotMachine population count -->
-  <population>2</population>
+  <population>10</population>
 
   <!-- Number of simulation runs per slot machine -->
   <precision>100000</precision>
@@ -30,7 +30,7 @@
   <maxReelStripLength>50</maxReelStripLength>
 
   <!-- Minimum number of symbols that must be selected for a SymbolSetGene -->
-  <minSymbols>3</minSymbols>
+  <minSymbols>4</minSymbols>
 
   <!-- Symbol definitions-->
   <symbols>
