@@ -1,6 +1,6 @@
 ﻿<Environment>
   <!-- SlotMachine population count -->
-  <population>1000</population>
+  <population>1</population>
 
   <!-- Number of simulation runs per slot machine -->
   <precision>100000</precision>
@@ -18,7 +18,7 @@
   <numRows>3</numRows>
 
   <!-- Maximum amount a line win can pay -->
-  <maxPay>20</maxPay>
+  <maxPay>2000</maxPay>
 
   <!-- Minimum number of symbols needed in a line for a win -->
   <minPayingSymbols>3</minPayingSymbols>

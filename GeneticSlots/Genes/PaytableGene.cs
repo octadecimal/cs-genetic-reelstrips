@@ -8,8 +8,15 @@ namespace GeneticSlots.Genes
 {
     class PaytableGene
     {
+        // Genome
+        int[] genome;
+
         // Environment
         Environment environment;
+
+        // RNG
+        Random rand;
+
 
         /// <summary>
         /// PaytableGene constructor.
@@ -18,6 +25,7 @@ namespace GeneticSlots.Genes
         public PaytableGene(Environment environment)
         {
             this.environment = environment;
+            this.rand = new Random(this.GetHashCode());
         }
 
 
@@ -30,7 +38,21 @@ namespace GeneticSlots.Genes
         /// </summary>
         public void CreateFirstGeneration()
         {
+            // Create initial genome
+            genome = new int[environment.numCols];
 
+            // Loop through genome, ignoring symbols not falling under `minPayingSymbols` count
+            for(int i = environment.minPayingSymbols - 1; i < environment.numCols; i++)
+            {
+                // Select random pay index
+                int index = rand.Next(0, environment.payouts.Length);
+
+                // Set pay index
+                genome[i] = index;
+            }
+
+            // Sort by payout low->high
+            Array.Sort(genome);
         }
     }
 }

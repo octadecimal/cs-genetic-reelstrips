@@ -71,6 +71,11 @@ namespace GeneticSlots
         public int minSymbols;
 
         /// <summary>
+        /// Possible payouts.
+        /// </summary>
+        public int[] payouts;
+
+        /// <summary>
         /// Symbol definitions.
         /// </summary>
         public Symbol[] symbols;
@@ -135,6 +140,9 @@ namespace GeneticSlots
             // Parse data structures
             symbols = ParseSymbols();
             lines = ParseLines();
+
+            // Generate data structures
+            payouts = generatePayouts();
         }
 
 
@@ -209,6 +217,38 @@ namespace GeneticSlots
 
             // Return output
             return output;
+        }
+
+        /// <summary>
+        /// Generates the possible number of payouts up to the value defined as `maxPay`.
+        /// </summary>
+        /// <returns></returns>
+        private int[] generatePayouts()
+        {
+            int currentPay = 0;
+
+            // Temporarily store our generated payouts as a list since length
+            // would be tricky to derive prior to completed generation.
+            List<int> values = new List<int>();
+
+            // Add an initial zero to our list
+            values.Add(0);
+
+            // Start generation
+            while(currentPay <= this.maxPay)
+            {
+                // Increment by range
+                if (currentPay < 5) currentPay += 1;
+                else if (currentPay < 100) currentPay += 5;
+                else if (currentPay < 1000) currentPay += 25;
+                else currentPay += 1000;
+
+                // Store value
+                values.Add(currentPay);
+            }
+
+            // Return fixed array
+            return values.ToArray();
         }
 
 

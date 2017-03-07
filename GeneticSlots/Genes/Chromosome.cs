@@ -13,7 +13,7 @@ namespace GeneticSlots.Genes
 
         // Genes
         SymbolSetGene symbolSet;
-        PaytableGene paytable;
+        PaytableGene[] paytable;
         ReelStripGene[] reelStrips;
 
         /// <summary>
@@ -21,11 +21,17 @@ namespace GeneticSlots.Genes
         /// </summary>
         public Chromosome(Environment environment)
         {
+            this.environment = environment;
+
             // Create SymbolSet gene
             symbolSet = new SymbolSetGene(environment);
 
-            // Create Paytable gene
-            paytable = new PaytableGene(environment);
+            // Create Paytable genes
+            paytable = new PaytableGene[environment.symbols.Length];
+            for(int i = 0; i < environment.symbols.Length; i++)
+            {
+                paytable[i] = new PaytableGene(environment);
+            }
 
             // Create ReelStrip genes
             reelStrips = new ReelStripGene[environment.numCols];
@@ -46,8 +52,16 @@ namespace GeneticSlots.Genes
         /// </summary>
         public void CreateFirstGeneration()
         {
+            // Create symbol set
             symbolSet.CreateFirstGeneration();
 
+            // Create paytable
+            for(int i = 0; i < paytable.Length; i++)
+            {
+                paytable[i].CreateFirstGeneration();
+            }
+
+            // Create reel strips
             for(int i = 0; i < reelStrips.Length; i++)
             {
                 reelStrips[i].CreateFirstGeneration(symbolSet);

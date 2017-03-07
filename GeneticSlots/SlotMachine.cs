@@ -29,6 +29,10 @@ namespace GeneticSlots
         // API
         // ==============================================================================
 
+        /// <summary>
+        /// Injects a chromosome into this slot machine, effectively altering its traits.
+        /// </summary>
+        /// <param name="chromosome"></param>
         public void InjectChromosome(Chromosome chromosome)
         {
             this.chromosome = chromosome;
