@@ -9,7 +9,7 @@ namespace GeneticSlots.Genes
     class PaytableGene
     {
         // Genome
-        int[] genome;
+        public int[] genome;
 
         // Environment
         Environment environment;
@@ -53,6 +53,15 @@ namespace GeneticSlots.Genes
 
             // Sort by payout low->high
             Array.Sort(genome);
+        }
+
+        /// <summary>
+        /// Prints the genome to the console.
+        /// </summary>
+        public void PrintGenome()
+        {
+            for (int i = 0; i < genome.Length; i++) Console.Write("[" + genome[i] + "]");
+            Console.Write("\n");
         }
     }
 }

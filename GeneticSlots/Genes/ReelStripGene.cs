@@ -73,9 +73,42 @@ namespace GeneticSlots.Genes
                     numSymbolsInjected++;
                 }
             }
+        }
 
-            PrintGenome();
-            Console.WriteLine();
+        /// <summary>
+        ///  Returns a random sequential, wrapped chunk of symbols from this reel strip.
+        /// </summary>
+        public int[] GetRandomSymbolChunk()
+        {
+            int[] output = new int[environment.numRows];
+            int numSymbolsFound = 0;
+            
+            // Grab a random starting index
+            int currentIndex = rand.Next(0, genome.Length);
+
+            // Loop and add
+            while(numSymbolsFound < output.Length)
+            {
+                // Non-empty symbol found at current location
+                if(genome[currentIndex] != -1)
+                {
+                    // Save
+                    output[numSymbolsFound] = genome[currentIndex];
+                    numSymbolsFound++;
+                }
+
+                // Simple wrapping to avoid modulus operations
+                if (currentIndex >= genome.Length - 1)
+                {
+                    currentIndex = 0;
+                }
+                else
+                {
+                    currentIndex++;
+                }
+            }
+
+            return output;
         }
 
         /// <summary>
@@ -83,7 +116,6 @@ namespace GeneticSlots.Genes
         /// </summary>
         public void PrintGenome()
         {
-            Console.Write("\n");
             for (int i = 0; i < genome.Length; i++)
             {
                 string value = genome[i] < 0 ? " " : genome[i].ToString();

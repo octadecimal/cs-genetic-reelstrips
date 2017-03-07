@@ -12,9 +12,12 @@ namespace GeneticSlots.Genes
         Environment environment;
 
         // Genes
-        SymbolSetGene symbolSet;
-        PaytableGene[] paytable;
-        ReelStripGene[] reelStrips;
+        public SymbolSetGene symbolSet;
+        public PaytableGene[] paytable;
+        public ReelStripGene[] reelStrips;
+
+        // Data
+        public int[] winScenarios;
 
         /// <summary>
         /// Constructor.
@@ -39,6 +42,9 @@ namespace GeneticSlots.Genes
             {
                 reelStrips[i] = new ReelStripGene(environment);
             }
+
+            // Generate win scenarios from paytable
+            //winScenarios = GenerateWinScenariosFromPaytable();
         }
 
 
@@ -66,6 +72,11 @@ namespace GeneticSlots.Genes
             {
                 reelStrips[i].CreateFirstGeneration(symbolSet);
             }
+
+            // Generate win scenarios from paytable
+            //winScenarios = GenerateWinScenariosFromPaytable();
+
+            //PrintChromosome();
         }
 
         /// <summary>
@@ -76,5 +87,51 @@ namespace GeneticSlots.Genes
         {
             return null;
         }
+
+        /// <summary>
+        /// Returns a random symbol from each reelstrip genome.
+        /// </summary>
+        /// <returns></returns>
+        public int[][] getRandomSymbolChunks()
+        {
+            int[][] randomSymbols = new int[environment.numCols][];
+
+            for (int i = 0; i < environment.numCols; i++)
+            {
+                randomSymbols[i] = reelStrips[i].GetRandomSymbolChunk();
+            }
+
+            return randomSymbols;
+        }
+
+        /// <summary>
+        /// Prints the entire chromosome.
+        /// </summary>
+        public void PrintChromosome()
+        {
+            // Print symbol set
+            Console.WriteLine("[symbols]");
+            symbolSet.PrintGenome();
+
+            // Print paytable
+            Console.WriteLine("[paytable]");
+            for (int i = 0; i < paytable.Length; i++)
+            {
+                paytable[i].PrintGenome();
+            }
+
+            // Print reel strips
+            Console.WriteLine("[reelstrips]");
+            for (int i = 0; i < reelStrips.Length; i++)
+            {
+                reelStrips[i].PrintGenome();
+            }
+        }
+
+
+        // PRIVATE
+        // ==============================================================================
+
+        
     }
 }

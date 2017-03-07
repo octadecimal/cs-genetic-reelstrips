@@ -42,6 +42,12 @@ namespace GeneticSlots
             // Create initial population
             createInitialPopulation();
 
+            /// Temp ///
+            for(int i = 0; i < population.Length; i++)
+            {
+                population[i].Simulate();
+            }
+
             // Wait
             Console.ReadKey();
         }
@@ -58,10 +64,12 @@ namespace GeneticSlots
             SlotMachine slotMachine;
             Chromosome chromosome;
 
+            population = new SlotMachine[environment.population];
+
             for(int i = 0; i < environment.population; i++)
             {
                 // Create slot machine
-                slotMachine = new SlotMachine(environment);
+                slotMachine = new SlotMachine(i, environment);
 
                 // Create a first-generation chromosome
                 chromosome = new Chromosome(environment);
@@ -69,6 +77,9 @@ namespace GeneticSlots
 
                 // Inject chromosome into slot machine
                 slotMachine.InjectChromosome(chromosome);
+
+                // Save in population
+                population[i] = slotMachine;
             }
         }
     }
