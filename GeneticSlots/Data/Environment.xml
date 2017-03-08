@@ -1,9 +1,9 @@
 ﻿<Environment>
   <!-- SlotMachine population count -->
-  <population>100</population>
+  <population>1000</population>
 
   <!-- Number of simulation runs per slot machine -->
-  <precision>1</precision>
+  <precision>100000</precision>
 
   <!-- Target RTP -->
   <targetRtp>0.95</targetRtp>

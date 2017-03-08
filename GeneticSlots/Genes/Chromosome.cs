@@ -13,7 +13,7 @@ namespace GeneticSlots.Genes
 
         // Genes
         public SymbolSetGene symbolSet;
-        public PaytableGene[] paytable;
+        public PaytableGene[] paytables;
         public ReelStripGene[] reelStrips;
 
         // Data
@@ -26,25 +26,21 @@ namespace GeneticSlots.Genes
         {
             this.environment = environment;
 
-            // Create SymbolSet gene
             symbolSet = new SymbolSetGene(environment);
 
-            // Create Paytable genes
-            paytable = new PaytableGene[environment.symbols.Length];
-            for(int i = 0; i < environment.symbols.Length; i++)
+            // Create paytable
+            paytables = new PaytableGene[environment.symbols.Length];
+            for (int i = 0; i < environment.symbols.Length; i++)
             {
-                paytable[i] = new PaytableGene(environment);
+                paytables[i] = new PaytableGene(environment);
             }
 
-            // Create ReelStrip genes
+            // Create reel strips
             reelStrips = new ReelStripGene[environment.numCols];
-            for(int i = 0; i < environment.numCols; i++)
+            for (int i = 0; i < environment.numCols; i++)
             {
                 reelStrips[i] = new ReelStripGene(environment);
             }
-
-            // Generate win scenarios from paytable
-            //winScenarios = GenerateWinScenariosFromPaytable();
         }
 
 
@@ -59,33 +55,24 @@ namespace GeneticSlots.Genes
         public void CreateFirstGeneration()
         {
             // Create symbol set
+            symbolSet = new SymbolSetGene(environment);
             symbolSet.CreateFirstGeneration();
 
             // Create paytable
-            for(int i = 0; i < paytable.Length; i++)
+            paytables = new PaytableGene[environment.symbols.Length];
+            for (int i = 0; i < environment.symbols.Length; i++)
             {
-                paytable[i].CreateFirstGeneration();
+                paytables[i] = new PaytableGene(environment);
+                paytables[i].CreateFirstGeneration();
             }
 
             // Create reel strips
-            for(int i = 0; i < reelStrips.Length; i++)
+            reelStrips = new ReelStripGene[environment.numCols];
+            for (int i = 0; i < environment.numCols; i++)
             {
+                reelStrips[i] = new ReelStripGene(environment);
                 reelStrips[i].CreateFirstGeneration(symbolSet);
             }
-
-            // Generate win scenarios from paytable
-            //winScenarios = GenerateWinScenariosFromPaytable();
-
-            //PrintChromosome();
-        }
-
-        /// <summary>
-        /// Mates this chromosome with a passed chromosome, returning a new
-        /// chromosome instance with mixed traits of both.
-        /// </summary>
-        public Chromosome Mate(Chromosome mate)
-        {
-            return null;
         }
 
         /// <summary>
@@ -115,9 +102,9 @@ namespace GeneticSlots.Genes
 
             // Print paytable
             Console.WriteLine("[paytable]");
-            for (int i = 0; i < paytable.Length; i++)
+            for (int i = 0; i < paytables.Length; i++)
             {
-                paytable[i].PrintGenome();
+                paytables[i].PrintGenome();
             }
 
             // Print reel strips
@@ -127,10 +114,6 @@ namespace GeneticSlots.Genes
                 reelStrips[i].PrintGenome();
             }
         }
-
-
-        // PRIVATE
-        // ==============================================================================
 
         
     }

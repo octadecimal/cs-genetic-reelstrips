@@ -40,6 +40,15 @@ namespace GeneticSlots.Genes
         // ==============================================================================
 
         /// <summary>
+        /// Attaches a new genome to this gene.
+        /// </summary>
+        /// <param name="genome"></param>
+        public void AttachGenome(int[] genome)
+        {
+            this.genome = genome;
+        }
+
+        /// <summary>
         /// Creates our first generation genome, using the environment as a source of
         /// trait parameters instead of inherited traits from other genes.
         /// </summary>

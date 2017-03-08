@@ -8,26 +8,35 @@ using System.Threading.Tasks;
 
 namespace GeneticSlots
 {
+    public delegate void CompleteDelegate(object sender);
+
     class SlotMachine
     {
+        // Complete event.
+        public event CompleteDelegate CompleteEvent;
+
         // Slot Machine unique identifier.
-        int id;
+        public int id;
+
+        // Chromosome
+        public Chromosome chromosome;
+
+        // Data
+        public double fitness;
+        double rtp;
+        double winRate;
 
         // World environment.
         Environment environment;
 
-        // Chromosome
-        Chromosome chromosome;
-
         // Win Scenarios
         int[][] winScenarios;
 
-        // Spin state
+        // State
         int balance;
+        int startingBalance;
         int numSpins;
         int numWins;
-        double rtp;
-        double winRate;
 
 
         /// <summary>
@@ -50,7 +59,7 @@ namespace GeneticSlots
         /// </summary>
         public void Reset()
         {
-            this.balance = 100000;
+            this.balance = this.startingBalance = 100000;
             this.numSpins = 0;
             this.numWins = 0;
             this.rtp = 0;
@@ -70,6 +79,25 @@ namespace GeneticSlots
             {
                 Spin();
             }
+
+            // Post-process
+            this.rtp = (double)balance / (double)startingBalance;
+            this.winRate = (double)numWins / (double)numSpins;
+            double distanceFromTargetRtp = Math.Pow((1 / Math.Abs(environment.targetRtp - rtp)) * 100, 2);
+            double distanceFromTargetWrt = Math.Pow((1 / Math.Abs(environment.targetWinRate - winRate)) * 100, 2);
+            this.fitness = distanceFromTargetRtp * winRate;
+
+            if (rtp > 0.9 && rtp < 1)
+            {
+                Console.Write("\n[" + id + "]\t" + (rtp * 100).ToString("N4") + "%\t" + winRate.ToString("F") + "\t\t" + fitness.ToString("F"));
+            }
+            else
+            {
+                Console.Write(".");
+            }
+
+            // Dispatch complete
+            CompleteEvent(this);
         }
 
         /// <summary>
@@ -86,6 +114,13 @@ namespace GeneticSlots
 
             // Evaluate wins
             int win = EvaluateWins(symbols);
+
+            // Post-process
+            if(win > 0)
+            {
+                balance += win;
+                numWins++;
+            }
         }
 
         /// <summary>
@@ -169,8 +204,8 @@ namespace GeneticSlots
                 // Get current symbol at current line position
                 symbol = symbolDefinitions[symbols[i][line[i]]];
 
-                // Test
-                if(scenario[i] != symbol.id && !symbol.isWild)
+                // Test symbol
+                if(!symbol.isWild && scenario[i] != symbol.id)
                 {
                     return 0;
                 }
@@ -196,7 +231,7 @@ namespace GeneticSlots
             for (int i = 0; i < numSymbols; i++)
             {
                 // Get paytable genome for current symbol
-                int[] symbolPays = chromosome.paytable[i].genome;
+                int[] symbolPays = chromosome.paytables[i].genome;
 
                 // Create scenario for each pay
                 for (int j = environment.minPayingSymbols - 1; j < environment.numCols; j++)
@@ -216,7 +251,7 @@ namespace GeneticSlots
                     }
 
                     // Fill last cell with payout for this scenario
-                    scenario[environment.numCols] = chromosome.paytable[i].genome[j];
+                    scenario[environment.numCols] = chromosome.paytables[i].genome[j];
 
                     // Save scenario
                     winScenarios[scenarioId] = scenario;
