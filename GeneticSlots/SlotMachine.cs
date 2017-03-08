@@ -23,7 +23,7 @@ namespace GeneticSlots
 
         // Data
         public double fitness;
-        double rtp;
+        public double rtp;
         double winRate;
 
         // World environment.
@@ -87,7 +87,7 @@ namespace GeneticSlots
             double distanceFromTargetWrt = Math.Pow((1 / Math.Abs(environment.targetWinRate - winRate)) * 100, 2);
             this.fitness = distanceFromTargetRtp * winRate;
 
-            if (rtp > 0.9 && rtp < 1)
+            if (rtp > 0.8 && rtp < 1.1)
             {
                 Console.Write("\n[" + id + "]\t" + (rtp * 100).ToString("N4") + "%\t" + winRate.ToString("F") + "\t\t" + fitness.ToString("F"));
             }

@@ -78,7 +78,7 @@ namespace GeneticSlots
         public void Simulate()
         {
             //Console.Clear();
-            Console.WriteLine("Simulating generation: " + currentGeneration);
+            Console.WriteLine("\n\nSimulating generation: " + currentGeneration+"\n");
 
             numSlotMachinesComplete = 0;
 
@@ -137,6 +137,17 @@ namespace GeneticSlots
                 // Pause
                 Thread.Sleep(1000);
 
+                // Output
+                double sumF = 0;
+                double sumR = 0;
+                for(int i = 0; i < population.Length; i++)
+                {
+                    sumF += population[i].fitness;
+                    sumR += population[i].rtp;
+                }
+                Console.WriteLine("\n\nAverage fitness: " + (sumF/(double)population.Length).ToString("F"));
+                Console.WriteLine("Average rtp:     " + ((sumR/(double)population.Length)*100).ToString("F")+"%");
+
                 // Handle completion
                 HandleGenerationSimulationsCompleted();
 
@@ -171,7 +182,7 @@ namespace GeneticSlots
                 SlotMachine a = weightedValues.GetValue();
                 SlotMachine b = weightedValues.GetValue();
 
-                Console.Write(a.id + "<->" + b.id + "  ");
+                Console.Write(a.id + ":" + b.id + "  ");
 
                 Chromosome child = breeder.Breed(a.chromosome, b.chromosome);
 

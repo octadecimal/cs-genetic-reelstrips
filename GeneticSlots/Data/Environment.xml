@@ -1,6 +1,6 @@
 ﻿<Environment>
   <!-- SlotMachine population count -->
-  <population>1000</population>
+  <population>100</population>
 
   <!-- Number of simulation runs per slot machine -->
   <precision>100000</precision>
