@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Breeder.cs" />
     <Compile Include="Environment.cs" />
+    <Compile Include="Filesystem.cs" />
     <Compile Include="Genes\Chromosome.cs" />
     <Compile Include="Genes\PaytableGene.cs" />
     <Compile Include="Genes\ReelStripGene.cs" />

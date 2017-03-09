@@ -24,7 +24,9 @@ namespace GeneticSlots
         // Data
         public double fitness;
         public double rtp;
-        double winRate;
+        public double winRate;
+        public double distanceFromTargetRtp;
+        public double distanceFromTargetWrt;
 
         // World environment.
         Environment environment;
@@ -83,13 +85,13 @@ namespace GeneticSlots
             // Post-process
             this.rtp = (double)balance / (double)startingBalance;
             this.winRate = (double)numWins / (double)numSpins;
-            double distanceFromTargetRtp = Math.Pow((1 / Math.Abs(environment.targetRtp - rtp)) * 100, 2);
-            double distanceFromTargetWrt = Math.Pow((1 / Math.Abs(environment.targetWinRate - winRate)) * 100, 2);
-            this.fitness = distanceFromTargetRtp * winRate;
+            distanceFromTargetRtp = Math.Abs(environment.targetRtp - rtp);
+            distanceFromTargetWrt = Math.Pow((1 / Math.Abs(environment.targetWinRate - winRate)) * 100, 2);
+            this.fitness = Math.Pow((1 / Math.Abs(environment.targetRtp - rtp)) * 100, 2) * winRate;
 
             if (rtp > 0.8 && rtp < 1.1)
             {
-                Console.Write("\n[" + id + "]\t" + (rtp * 100).ToString("N4") + "%\t" + winRate.ToString("F") + "\t\t" + fitness.ToString("F"));
+                Console.WriteLine("\n[" + id + "]\t" + (rtp * 100).ToString("N4") + "%\t" + winRate.ToString("F") + "\t\t" + fitness.ToString("F"));
             }
             else
             {
@@ -214,6 +216,10 @@ namespace GeneticSlots
             // All tests passed, return payout for scenario
             return scenario[scenario.Length - 1];
         }
+
+
+        // UTIL
+        // ==============================================================================
 
         /// <summary>
         /// Generates a set of win scenarios from the paytable, allowing for more efficient

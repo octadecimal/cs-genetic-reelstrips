@@ -124,7 +124,8 @@ namespace GeneticSlots.Genes
         /// </summary>
         public void PrintGenome()
         {
-            for(int i = 0; i < genome.Length; i++) Console.Write("[" + genome[i] + "]");
+            Console.Write("\n");
+            for (int i = 0; i < genome.Length; i++) Console.Write("[" + genome[i] + "]");
             Console.Write("\n");
         }
 

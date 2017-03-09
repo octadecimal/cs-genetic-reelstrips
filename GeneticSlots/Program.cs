@@ -23,6 +23,9 @@ namespace GeneticSlots
         // Breeder
         Breeder breeder;
 
+        // Filesystem
+        Filesystem filesystem;
+
         // Our current generation.
         int currentGeneration = 1;
 
@@ -49,6 +52,9 @@ namespace GeneticSlots
 
             // Create breeder
             breeder = new Breeder(environment);
+
+            // Create filesystem
+            filesystem = new Filesystem();
 
             // Create initial population
             createInitialPopulation();
@@ -78,7 +84,8 @@ namespace GeneticSlots
         public void Simulate()
         {
             //Console.Clear();
-            Console.WriteLine("\n\nSimulating generation: " + currentGeneration+"\n");
+            Console.WriteLine("\n\n=============================================================");
+            Console.WriteLine("Simulating generation: " + currentGeneration+"\n");
 
             numSlotMachinesComplete = 0;
 
@@ -128,8 +135,16 @@ namespace GeneticSlots
         /// <param name="sender"></param>
         private void OnSlotMachineSimulationComplete(object sender)
         {
+            SlotMachine slotMachine = (SlotMachine)sender;
+            
             // Increment
             numSlotMachinesComplete++;
+
+            // Write interesting results
+            if (slotMachine.distanceFromTargetRtp <= 0.005)
+            {
+                filesystem.WriteSlotMachineGenotype(slotMachine);
+            }
 
             // All complete
             if (numSlotMachinesComplete == population.Length)
@@ -140,13 +155,20 @@ namespace GeneticSlots
                 // Output
                 double sumF = 0;
                 double sumR = 0;
+                int best = 0;
                 for(int i = 0; i < population.Length; i++)
                 {
                     sumF += population[i].fitness;
                     sumR += population[i].rtp;
+
+                    if(population[i].fitness > population[best].fitness)
+                    {
+                        best = i;
+                    }
                 }
                 Console.WriteLine("\n\nAverage fitness: " + (sumF/(double)population.Length).ToString("F"));
-                Console.WriteLine("Average rtp:     " + ((sumR/(double)population.Length)*100).ToString("F")+"%");
+                Console.WriteLine("Average rtp:     " + ((sumR / (double)population.Length) * 100).ToString("F") + "%");
+                Console.WriteLine("Best rtp:        " + ((population[best].rtp) * 100).ToString("F") + "%");
 
                 // Handle completion
                 HandleGenerationSimulationsCompleted();

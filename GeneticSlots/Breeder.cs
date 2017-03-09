@@ -90,6 +90,32 @@ namespace GeneticSlots
             }
             //Console.WriteLine();
 
+            // Mutate
+            for(int i = 0; i < genome.Length; i++)
+            {
+                if(rand.NextDouble() < 0.01)
+                {
+                    if (genome[i] == 0)
+                    {
+                        genome[i] = 1;
+                    }
+                    //else
+                    //{
+                    //    int sum = 0;
+                    //    for(int s = 0; s < genome.Length; s++)
+                    //    {
+                    //        sum += genome[i];
+                    //    }
+
+                    //    if(sum >= environment.minSymbols)
+                    //    {
+                    //        Console.WriteLine("HA: " + sum);
+                    //        genome[i] = 0;
+                    //    }
+                    //}
+                }
+            }
+
             // Return new child genome
             return genome;
         }
@@ -120,7 +146,7 @@ namespace GeneticSlots
                     }
                 }
             }
-
+            
             return genome;
         }
 
@@ -167,6 +193,14 @@ namespace GeneticSlots
                     }
 
                     //Console.WriteLine(s(symbol0) + "\t" + s(symbol1) + "\t" + exists0 + "\t" + exists1 + "\t" + s(genome[i][j]));
+                }
+
+                for (int j = 0; j < genome.Length; j++)
+                {
+                    if (rand.NextDouble() < 0.01)
+                    {
+                        genome[i][j] = genome[i][rand.Next(0, genome[i].Length)];
+                    }
                 }
             }
 

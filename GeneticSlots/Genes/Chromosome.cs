@@ -92,6 +92,77 @@ namespace GeneticSlots.Genes
         }
 
         /// <summary>
+        /// Returns an encoded genotype of this chromosome.
+        /// </summary>
+        public int[][] EncodeGenotype()
+        {
+            int currentOffset = 0;
+
+            int[][] output = new int[1 + paytables.Length + reelStrips.Length][];
+
+            output[currentOffset] = symbolSet.genome;
+            currentOffset++;
+            
+            for(int i = 0; i < paytables.Length; i++)
+            {
+                output[currentOffset] = new int[paytables[i].genome.Length];
+                for(int j = 0; j < paytables[i].genome.Length; j++)
+                {
+                    output[currentOffset][j] = environment.payouts[paytables[i].genome[j]];
+                }
+                currentOffset++;
+            }
+
+            for (int i = 0; i < reelStrips.Length; i++)
+            {
+                output[currentOffset] = reelStrips[i].genome;
+                currentOffset++;
+            }
+
+            return output;
+        }
+
+        public string[] GetEncodedGenotypeString()
+        {
+            int[][] genotype = EncodeGenotype();
+
+            string[] output = new string[genotype.Length];
+
+            for (int i = 0; i < genotype.Length; i++)
+            {
+                output[i] = "";
+                for (int j = 0; j < genotype[i].Length; j++)
+                {
+                    string s = genotype[i][j] == -1 ? " " : genotype[i][j].ToString();
+
+                    output[i] += s + ",";
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Prints the genotype.
+        /// </summary>
+        public void PrintGenotype()
+        {
+            int[][] genotype = EncodeGenotype();
+
+            for (int i = 0; i < genotype.Length; i++)
+            {
+                Console.WriteLine();
+                for (int j = 0; j < genotype[i].Length; j++)
+                {
+                    string s = genotype[i][j] == -1 ? " " : genotype[i][j].ToString();
+
+                    Console.Write(s + " ");
+                }
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
         /// Prints the entire chromosome.
         /// </summary>
         public void PrintChromosome()
