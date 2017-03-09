@@ -1,0 +1,78 @@
+﻿<Environment>
+  <!-- SlotMachine population count -->
+  <population>256</population>
+
+  <!-- Number of simulation runs per slot machine -->
+  <precision>1000000</precision>
+
+  <!-- Target RTP -->
+  <targetRtp>0.95</targetRtp>
+
+  <!-- Target win rate -->
+  <targetWinRate>0.35</targetWinRate>
+
+  <!-- Number of symbol columns (reels) -->
+  <numCols>5</numCols>
+
+  <!-- Number of symbol rows -->
+  <numRows>3</numRows>
+
+  <!-- Maximum amount a line win can pay -->
+  <maxPay>2000</maxPay>
+
+  <!-- Minimum number of symbols needed in a line for a win -->
+  <minPayingSymbols>3</minPayingSymbols>
+
+  <!-- Minimum reel strip length -->
+  <minReelStripLength>5</minReelStripLength>
+
+  <!-- Maximum reel strip length -->
+  <maxReelStripLength>100</maxReelStripLength>
+
+  <!-- Minimum number of symbols that must be selected for a SymbolSetGene -->
+  <minSymbols>4</minSymbols>
+
+  <!-- Symbol definitions-->
+  <symbols>
+    <symbol>0</symbol>
+    <symbol>1</symbol>
+    <symbol>2</symbol>
+    <symbol>3</symbol>
+    <symbol>4</symbol>
+    <symbol>J</symbol>
+    <symbol>Q</symbol>
+    <symbol>K</symbol>
+    <symbol>A</symbol>
+    <symbol isWild="true">W</symbol>
+  </symbols>
+
+  <!-- Payline definitions-->
+  <lines>
+    <line>1,1,1,1,1</line>
+    <line>0,0,0,0,0</line>
+    <line>2,2,2,2,2</line>
+    <line>0,1,2,1,0</line>
+    <line>2,1,0,1,2</line>
+    <line>0,0,1,2,2</line>
+    <line>2,2,1,0,0</line>
+    <line>1,0,1,2,1</line>
+    <line>1,2,1,0,1</line>
+    <line>0,1,1,1,2</line>
+    <line>2,1,1,1,0</line>
+    <line>1,0,0,1,2</line>
+    <line>1,2,2,1,0</line>
+    <line>1,1,0,1,2</line>
+    <line>1,1,2,1,0</line>
+    <line>0,0,1,2,1</line>
+    <line>2,2,1,0,1</line>
+    <line>1,0,1,2,2</line>
+    <line>1,2,1,0,0</line>
+    <line>0,0,0,1,2</line>
+    <line>2,2,2,1,0</line>
+    <line>0,1,2,2,2</line>
+    <line>2,1,0,0,0</line>
+    <line>0,1,0,1,0</line>
+    <line>2,1,2,1,2</line>
+  </lines>
+
+</Environment>
